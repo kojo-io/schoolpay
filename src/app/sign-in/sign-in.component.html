@@ -1,0 +1,58 @@
+<div class="h-screen w-screen">
+  <div class="grid grid-cols-2 h-full">
+    <div class="col-start-1 col-span-1 bg-slate-100 h-full">
+      <div class="flex flex-wrap content-center h-full w-full">
+
+        <div class="flex justify-center w-full">
+          <div class="w-3/6">
+            <div class="space-y-4 bg-white p-4 relative rounded-lg">
+              <app-app-loader [loading]="loading"></app-app-loader>
+              <form [formGroup]="form" class="space-y-4">
+               <ng-container *ngIf="!codeReceived">
+                 <h1 class="font-bold">Sign in with your phone number</h1>
+                 <div class="field w-full">
+                   <label for="phoneNum" class="block">Enter phone number</label>
+                   <input class="w-full border text-lg p-2 border-gray-400 rounded" type="text" id="phoneNum" formControlName="userName" mask="000 000 0000">
+<!--                   <p-inputMask styleClass="w-full" id="phoneNum" formControlName="userName" mask="999 999 9999" slotChar="-"></p-inputMask>-->
+                 </div>
+                 <div class="mt-6">
+                   <div class="space-y-5">
+                     <button [disabled]="form.get('phoneNumber')?.invalid" (click)="getCode()" [loading]="loading" class="w-full" pButton type="button" label="Send code" ></button>
+                   </div>
+                 </div>
+               </ng-container>
+              </form>
+              <ng-container *ngIf="codeReceived">
+                <h1 class="font-bold text-center">Verify your phone number</h1>
+                <small (click)="codeReceived = false" id="code-help" class="block text-base cursor-pointer text-center w-full underline text-green-600 font-bold">Change phone number.</small>
+                <small id="code-help" class="block text-base text-center w-full">Enter the one time passcode sent to <b>{{form.get('userName')?.value}}</b> here.</small>
+                <div class="flex justify-center space-x-4">
+                  <div class="font-bold text-2xl">
+                    <h1 class="flex flex-wrap content-center h-full">
+                      T -
+                    </h1>
+                  </div>
+                  <div class="flex flex-wrap content-center h-full">
+                    <ng-otp-input [(ngModel)]="otp" ngDefaultControl (onInputChange)="login($event)" [config]="baseService.config"></ng-otp-input>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-auto p-4 h-full">
+      <div class="flex flex-wrap content-center h-full w-full">
+
+        <div class="flex justify-center w-full">
+          <div class="w-3/6">
+            <h1 class=" font-bold">Welcome to <span class="text-blue-600">tollesoft</span></h1>
+            <label class="text-blue-600 text-5xl block font-light mb-4">studpay</label>
+            <div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

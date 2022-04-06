@@ -1,0 +1,22 @@
+import { TestBed } from '@angular/core/testing';
+
+import { RegisterService } from './register.service';
+import {HttpClientModule} from "@angular/common/http";
+import {HttpClientTestingModule} from "@angular/common/http/testing";
+
+describe('RegisterService', () => {
+  let service: RegisterService;
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [
+        HttpClientTestingModule
+      ]
+    });
+    service = TestBed.inject(RegisterService);
+  });
+
+  it('should be created', () => {
+    expect(service).toBeTruthy();
+  });
+});

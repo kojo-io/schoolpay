@@ -1,0 +1,47 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Monoton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+@import "~leaflet/dist/leaflet.css";
+@import "~leaflet-routing-machine/dist/leaflet-routing-machine.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.stylish{
+  font-family: 'Monoton', cursive !important;
+}
+
+body, html {
+  margin: 0; font-family: 'Ubuntu', sans-serif;
+  -moz-osx-font-smoothing: grayscale !important;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+*{
+  outline: none !important;
+}
+
+*::-webkit-scrollbar-track
+{
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar
+{
+  width: 5px;
+  background-color: transparent;
+}
+
+*::-webkit-scrollbar-thumb
+{
+  background-color: #bfbfbf;
+  border: 2px solid #bfbfbf;
+}
+
+.allCaps{
+  text-transform: uppercase;
+}
+
+.noWrap{
+  white-space:nowrap;
+}

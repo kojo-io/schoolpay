@@ -1,0 +1,43 @@
+<div class="flex flex-col w-full h-full relative">
+  <app-app-loader [loading]="false"></app-app-loader>
+  <div class="h-auto w-full bg-white p-6 flex justify-between">
+    <div class="w-full space-y-3">
+      <h1 class="font-bold text-3xl block">Configuration</h1>
+    </div>
+    <div class="flex space-x-3">
+      <div class="flex flex-wrap content-center h-full">
+        <button
+          icon="pi pi-plus"
+          class="p-button-sm"
+          pButton
+          type="button"
+          label="Submit"
+        ></button>
+      </div>
+      <div class="flex flex-wrap content-center h-full">
+        <button
+          icon="pi pi-refresh"
+          class="p-button-sm"
+          pButton
+          type="button"
+          label="Reload"
+        ></button>
+      </div>
+    </div>
+  </div>
+  <div class="w-full h-full grow bg-white">
+    <div class="w-2/3 px-20">
+      <form class="space-y-4 mt-6 w-full">
+        <div class="field w-full">
+          <label for="integeronly" class="block"
+            >Feeding and Transport Fee</label
+          >
+          <p-inputNumber
+            styleClass="w-full"
+            inputId="integeronly"
+          ></p-inputNumber>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,23 @@
+<ng-container *ngIf="!loading">
+  <router-outlet></router-outlet>
+</ng-container>
+<ng-container *ngIf="loading">
+  <div class="h-screen w-screen">
+    <div class="flex flex-wrap content-center h-full w-full">
+      <div class="flex justify-center w-full">
+        <div class="text-center space-y-3">
+          <div>
+            <label class="text-2xl font-bold block">
+              <label class="text-blue-600 text-5xl block font-light">studpay</label>
+              <label class="text-blue-400 block text-base">Tollesoft</label>
+            </label>
+          </div>
+          <div>
+            <p-progressBar [style]="{'height': '6px'}" mode="indeterminate"></p-progressBar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<p-toast position="top-right"></p-toast>

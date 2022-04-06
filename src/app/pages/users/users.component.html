@@ -1,0 +1,114 @@
+<div class="flex flex-col w-full h-full relative">
+  <app-app-loader [loading]="loading"></app-app-loader>
+  <div class="h-auto w-full bg-white p-6 flex justify-between">
+    <h1 class="font-bold text-3xl">Users</h1>
+    <div class="flex space-x-3">
+      <div class="flex flex-wrap content-center h-full">
+        <input pInputText class="w-72 p-inputtext-sm" placeholder="Search">
+      </div>
+      <div class="flex flex-wrap content-center h-full">
+        <button (click)="modal()" icon="pi pi-plus" class="p-button-sm" pButton type="button" label="Add" ></button>
+      </div>
+      <div class="flex flex-wrap content-center h-full">
+        <button (click)="getData()" icon="pi pi-refresh" class="p-button-sm" pButton type="button" label="Reload" ></button>
+      </div>
+    </div>
+  </div>
+  <p-table
+    [value]="data"
+    responsiveLayout="scroll"
+    styleClass="w-full h-full p-datatable-sm grow"
+    [paginator]="true" [rows]="10" [showCurrentPageReport]="true" paginatorPosition="bottom"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [rowsPerPageOptions]="[10,25,50]"
+    [totalRecords]="data.length">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>FIRST NAME</th>
+        <th>LAST NAME</th>
+        <th>EMAIL</th>
+        <th>PHONE NUMBER</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-data>
+      <tr>
+        <td>{{data.firstName}}</td>
+        <td>{{data.lastName}}</td>
+        <td>{{data.email}}</td>
+        <td>{{data.phoneNumber}}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+
+<ng-container *ngIf="showForm">
+  <div class="absolute right-0 bottom-0 left-0 top-0 p-4 backdrop-blur-sm bg-white/30">
+    <div class="flex flex-wrap content-center h-full w-full">
+      <div class="flex justify-center w-full">
+        <div class="w-96 rounded-lg bg-white border shadow-xl">
+          <div class="flex justify-between p-2">
+            <div></div>
+            <div class="flex flex-wrap content-center h-full">
+              <i (click)="modal()" class="pi pi-times text-lg text-red-600 cursor-pointer hover:bg-red-100 p-2 rounded"></i>
+            </div>
+          </div>
+          <div class="p-4">
+            <form [formGroup]="form" class="space-y-4">
+              <div class="field w-full">
+                <label for="firstName" class="block">First Name</label>
+                <input id="firstName" type="text" class="w-full" formControlName="firstName" pInputText />
+              </div>
+              <div class="field w-full">
+                <label for="lastName" class="block">Last Name</label>
+                <input id="lastName" type="email" class="w-full" formControlName="lastName" pInputText />
+              </div>
+              <div class="field w-full">
+                <label for="userName" class="block">User Name</label>
+                <input id="userName" type="text" class="w-full" formControlName="userName" pInputText />
+              </div>
+              <div class="field w-full">
+                <label for="emailuser" class="block">Email</label>
+                <input id="emailuser" type="text" class="w-full" formControlName="email" pInputText />
+              </div>
+              <div class="field w-full">
+                <label for="phoneNum" class="block">Phone Number</label>
+                <p-inputMask styleClass="w-full" id="phoneNum" formControlName="phoneNumber" mask="999 999 9999"></p-inputMask>
+              </div>
+              <div class="field w-full">
+                <label for="password" class="block">Password</label>
+                <div class="p-input-icon-right w-full">
+                  <i (click)="showPassword()" class="pi {{passwordVisible ? 'pi-eye-slash' : 'pi-eye'}}"></i>
+                  <input id="password" [type]="passwordVisible ? 'text' : 'password'" class="w-full" pInputText formControlName="password" >
+                </div>
+              </div>
+              <button [disabled]="form.invalid" [loading]="loading" (click)="newUser()" class="p-button-sm w-full" pButton type="button" label="Submit"></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>
+<ng-container *ngIf="codeReceived">
+  <div class="absolute right-0 bottom-0 left-0 top-0 p-4 backdrop-blur-sm bg-white/30">
+    <div class="flex flex-wrap content-center h-full w-full">
+      <div class="flex justify-center w-full">
+        <div class="w-2/6 rounded-lg bg-white border shadow-xl">
+          <div class="p-10">
+            <h1 class="font-bold text-center">Verify phone number</h1>
+            <small id="code-help" class="block text-base text-center w-full">Enter the one time passcode sent to <b>{{form.get('phoneNumber')?.value}}</b> here.</small>
+            <div class="flex justify-center space-x-4">
+              <div class="font-bold text-2xl">
+                <h1 class="flex flex-wrap content-center h-full">
+                  T -
+                </h1>
+              </div>
+              <div class="flex flex-wrap content-center h-full">
+                <ng-otp-input [(ngModel)]="otp" (onInputChange)="verifyCode($event)" [config]="baseService.config"></ng-otp-input>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

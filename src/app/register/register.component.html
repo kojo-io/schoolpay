@@ -1,0 +1,106 @@
+<div class="h-screen w-screen bg-sign overflow-hidden">
+  <div class="grid grid-cols-2 h-full">
+    <div class="col-start-1 col-span-1 bg-white h-full overflow-auto relative">
+      <app-app-loader [loading]="loading"></app-app-loader>
+      <div class="flex flex-wrap content-center h-full w-full">
+        <div class="flex justify-center w-full">
+          <div class="p-4 w-2/3 h-full">
+            <label class="text-blue-600 text-5xl block font-light text-center mb-4">side delivr</label>
+            <div class="w-full relative h-full overflow-auto">
+              <ng-container *ngIf="!codeReceived">
+                <p-steps [model]="stepsItems" [readonly]="true" [activeIndex]="selectedIndex"></p-steps>
+                <ng-container *ngIf="selectedIndex === 0">
+                  <div class="w-full">
+                    <form [formGroup]="companyForm" class="space-y-4 mt-6">
+                      <div class="field w-full">
+                        <label for="name" class="block">Company Name</label>
+                        <input id="name" type="text" class="w-full" formControlName="name" pInputText />
+                      </div>
+                      <div class="field w-full">
+                        <label for="email" class="block">Email</label>
+                        <input id="email" type="email" class="w-full" formControlName="email" pInputText />
+                      </div>
+                      <div class="field w-full">
+                        <label for="phone" class="block">Phone Number</label>
+                        <input id="phone" type="text" class="w-full" formControlName="contact" pInputText />
+                      </div>
+                      <div class="field w-full">
+                        <label for="address" class="block">Address</label>
+                        <textarea id="address" class="w-full" formControlName="address" pInputTextarea></textarea>
+                      </div>
+                      <div class="field w-full">
+                        <label for="address" class="block">Select company registration document as image</label>
+                        <p-fileUpload [customUpload]="false" aria-describedby="username1-help"
+                                      (onSelect)="onUpload($event)"
+                                      [showCancelButton]="false"
+                                      [showUploadButton]="false" accept="image/*" [maxFileSize]="1000000"></p-fileUpload>
+                        <small id="username1-help" class="block text-base text-green-500 font-bold">This document is used for company verification and approval purposes.</small>
+                      </div>
+                    </form>
+                  </div>
+                </ng-container>
+                <ng-container *ngIf="selectedIndex === 1">
+                  <div class="w-full overflow-auto">
+                    <form [formGroup]="userForm" class="space-y-4 mt-6">
+                      <div class="field w-full">
+                        <label for="firstName" class="block">First Name</label>
+                        <input id="firstName" type="text" class="w-full" formControlName="firstName" pInputText />
+                      </div>
+                      <div class="field w-full">
+                        <label for="lastName" class="block">Last Name</label>
+                        <input id="lastName" type="email" class="w-full" formControlName="lastName" pInputText />
+                      </div>
+                      <div class="field w-full">
+                        <label for="userName" class="block">User Name</label>
+                        <input id="userName" type="text" class="w-full" formControlName="userName" pInputText />
+                      </div>
+                      <div class="field w-full">
+                        <label for="emailuser" class="block">Email</label>
+                        <input id="emailuser" type="text" class="w-full" formControlName="email" pInputText />
+                      </div>
+                      <div class="field w-full">
+                        <label for="phoneNum" class="block">Phone Number</label>
+                        <p-inputMask styleClass="w-full" id="phoneNum" formControlName="phoneNumber" mask="999 999 9999"></p-inputMask>
+                      </div>
+                      <div class="field w-full">
+                        <label for="password" class="block">Password</label>
+                        <div class="p-input-icon-right w-full">
+                          <i (click)="showPassword()" class="pi {{passwordVisible ? 'pi-eye-slash' : 'pi-eye'}}"></i>
+                          <input id="password" [type]="passwordVisible ? 'text' : 'password'" class="w-full" pInputText formControlName="password" >
+                        </div>
+                      </div>
+                    </form>
+                  </div>
+                </ng-container>
+                <div class="w-full flex justify-between mt-3">
+                  <button [disabled]="selectedIndex === 0 && companyForm.invalid" (click)="selectedIndex = selectedIndex - 1" class="p-button-sm" pButton type="button" label="Previous"></button>
+                  <ng-container *ngIf="selectedIndex === 0">
+                    <button [disabled]="selectedIndex === stepsItems.length" (click)="nextStep()" class="p-button-sm" pButton type="button" label="Next"></button>
+                  </ng-container>
+                  <ng-container *ngIf="selectedIndex === 1">
+                    <button [disabled]="userForm.invalid && companyForm.invalid" [loading]="loading" (click)="register()" class="p-button-sm" pButton type="button" label="Submit"></button>
+                  </ng-container>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="codeReceived">
+                <h1 class="font-bold text-center">Verify your phone number</h1>
+                <small id="code-help" class="block text-base text-center w-full">Enter the one time passcode sent to <b>{{userForm.get('phoneNumber')?.value}}</b> here.</small>
+                <div class="flex justify-center space-x-4">
+                  <div class="font-bold text-2xl">
+                    <h1 class="flex flex-wrap content-center h-full">
+                      T -
+                    </h1>
+                  </div>
+                  <div class="flex flex-wrap content-center h-full">
+                    <ng-otp-input [(ngModel)]="otp" (onInputChange)="login($event)" [config]="baseService.config"></ng-otp-input>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-auto"></div>
+  </div>
+</div>
